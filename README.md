@@ -1,6 +1,6 @@
-# Blood-Bank
-<<<<<<< HEAD
-The blood bank  website project developed by Rahul Bairagi is built on the MERN stack, which stands for MongoDB, Express.js, React, and Node.js. This technology stack is widely used for building robust and scalable web applications.
+# Rakt Bandhan:The Blood Bank
+
+The blood bank  website project developed by Prasam Jain is built on the MERN stack, which stands for MongoDB, Express.js, React, and Node.js. This technology stack is widely used for building robust and scalable web applications.
 
 blood bank website is an online platform that serves as a centralized resource for connecting blood donors with recipients in need. It is designed to facilitate the process of blood donation, streamline communication, and ensure efficient management of the blood supply. The website acts as a bridge between donors and healthcare institutions, providing valuable information, online registration, scheduling, and other essential features.
 ### Manual Setup
@@ -67,8 +67,7 @@ Some of the technologies used in the development of this web application are as 
 -   [Mongoose](https://mongoosejs.com/): An ODM(Object Data Modelling)library for MongoDB and Node.js
 
 ## Made By
-### Rahul Bairagi | [📝 LinkedIn](https://www.linkedin.com/in/rahul3008/)
+### Prasam Jain | [📝 LinkedIn](https://www.linkedin.com/in/prasam-jain-59a45a191/)
 
-=======
+
 The blood bank website project developed by Prasam Jain is built on the MERN stack, which stands for MongoDB, Express.js, React, and Node.js. This technology stack is widely used for building robust and scalable web applications.
->>>>>>> 15cd9f583555c31b25cf28ccd7b80409436e4017
