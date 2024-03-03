@@ -6,6 +6,7 @@ import "../../../index.css"
 const Header = () => {
 
     const { user } = useSelector((state) => state.auth);
+    console.log("user", user);
     const navigate = useNavigate();
     const location = useLocation();
     // logout handler
@@ -22,7 +23,7 @@ const Header = () => {
                     <div className='navbar-brand h1'>
                         <BiDonateBlood color="red" />
                         &nbsp;
-                        Rakt Bandhan : The Blood Bank
+                        Rakt Bandhan: The Blood Bank
                     </div>
                     <ul className='navbar-nav flex-row'>
                         <li className='nav-item mx-3'>
@@ -30,9 +31,7 @@ const Header = () => {
                                 <BiUserCircle color='white' /> {" "}Welcome{" "}
                                 {user?.name || user?.hospitalName || user?.organisationName}
                                 &nbsp;
-                                <span className="badge bg-secondary">
-                                    {user.role === "hospital" ? "Recipient" : user.name}
-                                </span>
+                                <span className="badge bg-secondary">{user?.role}</span>
                             </p>
                         </li>
                         {

@@ -10,6 +10,7 @@ import '../index.css';
 
 const HomePage = () => {
     const { loading, error, user } = useSelector((state) => state.auth);
+    console.log(loading, error, user);
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
 
