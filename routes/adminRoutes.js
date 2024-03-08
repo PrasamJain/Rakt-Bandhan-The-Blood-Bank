@@ -1,6 +1,6 @@
 const express = require('express');
 const authMiddleware = require('../middlewares/authMiddleware');
-const { getDonarsListController, getHospitalListController, getOrgListController, deleteDonarController } = require('../controllers/adminController');
+const { getDonarsListController, getHospitalListController, getOrgListController,getTransactionController, deleteDonarController } = require('../controllers/adminController');
 const adminMiddleware = require('../middlewares/adminMiddleware');
 // router object
 const router = express.Router();
@@ -14,8 +14,8 @@ router.get('/donar-list', authMiddleware, adminMiddleware, getDonarsListControll
 router.get('/hospital-list', authMiddleware, adminMiddleware, getHospitalListController);
 
 /// GET || ORGANISATION LIST
-router.get('/org-list', authMiddleware, adminMiddleware,
-    getOrgListController);
+router.get('/org-list', authMiddleware, adminMiddleware,getOrgListController);
+router.get('/transaction', authMiddleware, adminMiddleware,getTransactionController);
 
 /*--------------------------------------------------------------*/
 /// DELET || ODONAR

@@ -16,6 +16,7 @@ import HospitalList from "./pages/Admin/HospitalList";
 import OrgList from "./pages/Admin/OrgList";
 import AboutPage from "./pages/AboutPage";
 import Organisations from "./pages/DashBoard/Organisations";
+import Transaction from "./pages/Admin/transaction";
 
 function App() {
   return (
@@ -52,6 +53,14 @@ function App() {
           element={
             <ProtectedRoute>
               <OrgList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/transaction"
+          element={
+            <ProtectedRoute>
+              <Transaction/>
             </ProtectedRoute>
           }
         />

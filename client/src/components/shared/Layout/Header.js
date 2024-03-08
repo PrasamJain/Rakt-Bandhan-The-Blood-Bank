@@ -6,7 +6,7 @@ import "../../../index.css"
 const Header = () => {
 
     const { user } = useSelector((state) => state.auth);
-    console.log("user", user);
+    // console.log("user", user);
     const navigate = useNavigate();
     const location = useLocation();
     // logout handler
@@ -31,7 +31,9 @@ const Header = () => {
                                 <BiUserCircle color='white' /> {" "}Welcome{" "}
                                 {user?.name || user?.hospitalName || user?.organisationName}
                                 &nbsp;
-                                <span className="badge bg-secondary">{user?.role}</span>
+                                <span className="badge bg-secondary">
+                                    {user?.role === "hospital" ? "Recipient" : user?.role}
+                                    </span>
                             </p>
                         </li>
                         {

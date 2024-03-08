@@ -1,4 +1,5 @@
-const userModel = require("../models/userModel"); 
+const userModel = require("../models/userModel");
+const inventoryModel = require("../models/inventoryModel");
 
 const getDonarsListController = async (req, res) => {
     try {
@@ -65,6 +66,32 @@ const getOrgListController = async (req, res) => {
     }
 };
 
+const getTransactionController = async (req, res) => {
+
+    console.log("req.body.userId", req.body);
+    try {
+
+        const inventory = await inventoryModel
+            .find()
+            .populate('donar')
+            .populate("hospital")
+            .sort({ createdAt: -1 });
+
+        return res.status(200).send({
+            success: true,
+            message: "Get All records successfully",
+            inventory
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            success: false,
+            message: "Error in Get All Inventory API",
+            error
+        })
+    }
+}
+
 // DELETE || Donar ||Hospital || Organisation
 const deleteDonarController = async (req, res) => {
     try {
@@ -87,4 +114,4 @@ const deleteDonarController = async (req, res) => {
 
 
 // EXPORT
-module.exports = { getDonarsListController, getHospitalListController, getOrgListController, deleteDonarController }
+module.exports = { getDonarsListController, getHospitalListController, getOrgListController, getTransactionController, deleteDonarController }

@@ -39,7 +39,7 @@ const Donar = () => {
                     <i className="fa-solid fa-hand-holding-medical text-success py-4"></i>
                     Donars Request
                 </h4>
-                <div className="mb-3" style={{ paddingRight: "40px" , marginTop: "20px"}}>
+                <div className="mb-3" style={{ paddingRight: "40px", marginTop: "20px" }}>
                     <label htmlFor="search" className="form-label" style={{ fontWeight: "bold" }}>
                         Search Donor:
                     </label>
@@ -65,22 +65,52 @@ const Donar = () => {
                             <th scope="col">Blood Group</th>
                             <th scope="col">Request Type</th>
                             <th scope="col">Date</th>
+                            <th scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         {filteredDonars.map((record) => (
-                            <tr key={record._id}>
-                                <td>{record.donorName || record.organisation + " (ORG)"}</td>
-                                <td>{record.donorEmail}</td>
-                                <td>{record.donorPhone}</td>
-                                <td>{record.bloodGroup}</td>
-                                <td>{record.requestType}</td>
-                                <td> {
-                                    moment(record.createdAt).format("DD/MM/YYYY")
-                                }
-                                </td>
-                            </tr>
+                            // Check if requestType is "donate"
+                            record.requestType === "donate" ? (
+                                <tr key={record._id}>
+                                    <td>{record.donorName || record.organisation + " (ORG)"}</td>
+
+                                    {/* To highlinght the email wehn search */}
+                                    <td>
+                                        {record.donorEmail.toLowerCase().includes(searchTerm.toLowerCase()) ? (
+                                            <>
+                                                {record.donorEmail.split(new RegExp(`(${searchTerm})`, 'gi')).map((part, index) => (
+                                                    part.toLowerCase() === searchTerm.toLowerCase() ? (
+                                                        <span key={index} style={{ backgroundColor: 'yellow' }}>{part}</span>
+                                                    ) : (
+                                                        <span key={index}>{part}</span>
+                                                    )
+                                                ))}
+                                            </>
+                                        ) : (
+                                            record.donorEmail
+                                        )}
+                                    </td>
+
+                                    <td>{record.donorPhone}</td>
+                                    <td>{record.bloodGroup}</td>
+                                    <td>{record.requestType}</td>
+                                    <td>{moment(record.createdAt).format("DD/MM/YYYY")}</td>
+                                    <td>
+                                        {/* Dropdown menu for accept or reject */}
+                                        <select
+                                            value={record.status}
+                                            onChange={(e) => handleStatusChange(e, record._id)}
+                                        >
+                                            <option value="pending">Pending</option>
+                                            <option value="accepted">Accepted</option>
+                                            <option value="rejected">Rejected</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            ) : null // Don't render if requestType is not "donate"
                         ))}
+
                     </tbody>
                 </table>
             </div>

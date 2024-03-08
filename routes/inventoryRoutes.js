@@ -4,6 +4,7 @@ const {
     createDonationController, 
     getInventoryController, 
     getDonarsController, 
+    getRequestController,
     getHospitalController, 
     getOrgnaisationController, 
     getInventoryHospitalController, 
@@ -33,6 +34,9 @@ router.post('/get-inventory-hospital', authMiddleware, getInventoryHospitalContr
 
 // GET ALL DONAR RECORDS || GET
 router.get('/get-donars', authMiddleware, getDonarsController)
+
+//GET pending request at reciver side
+router.get('/pending-request', authMiddleware, getRequestController)
 
 // GET ALL DONAR RECORDS || GET
 router.get("/get-hospitals", authMiddleware, getHospitalController);

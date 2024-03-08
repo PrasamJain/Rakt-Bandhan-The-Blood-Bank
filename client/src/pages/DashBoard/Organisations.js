@@ -12,21 +12,31 @@ const Organisations = () => {
     // find Organisations records
     const getOrg = async () => {
         try {
-            if (user?.role === "donar") {
-                const { data } = await API.get("/inventory/get-organisations");
-                console.log("donor", data);
-                if (data?.success) {
-                    setData(data?.organisations);
-                }
-            }
-            if (user?.role === "hospital") {
-                const { data } = await API.get(
-                    "/inventory/get-orgnaisation-for-hospital"
-                );
-                console.log("ORG recipient", data);
-                if (data?.success) {
-                    setData(data?.organisations);
-                }
+
+            const { data } = await API.get("/inventory/pending-request");
+            console.log("pending request", data);
+            if (data?.success) {
+                const donar = data.donars;
+                let combinedData = [];
+
+                donar.forEach(donar => {
+                    
+                    const organizationId = donar.organisation;
+                    
+                    const correspondingOrg = data.organisation.find(org => org._id === organizationId);
+                    // console.log("correspondingOrg",correspondingOrg);
+
+                    if (correspondingOrg) {
+                        const combinedEntity = {
+                            ...donar,
+                            organisation: correspondingOrg
+                        };
+                        combinedData.push(combinedEntity);
+                    }
+                });
+
+                console.log("combinedData",combinedData);
+                setData(combinedData);
             }
         } catch (error) {
             console.log(error);
@@ -43,34 +53,34 @@ const Organisations = () => {
                 style={{ fontWeight: "bold", paddingLeft: "9px" }}
             >
                 <i className='fa-sharp fa-solid fa-building-ngo text-success py-4'></i>
-                Organisations
+                Pending Request
             </h4>
             <div style={{ marginLeft: "10px", marginRight: "40px" }}>
                 <table class="table table-info table-striped tableClass">
                     <thead>
                         <tr class="table-warning" style={{ border: "1px solid gray" }}>
-                            <th scope="col">Name</th>
+                            <th scope="col">Donar Name</th>
+                            <th scope="col">Organisation Name</th>
                             <th scope="col">Email</th>
                             <th scope="col">Phone</th>
-                            <th scope="col">Website</th>
-                            <th scope="col">Address</th>
+                            <th scope="col">Blood Group</th>
                             <th scope="col">Date & Time</th>
+                            <th scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         {data?.map((record) => (
                             <tr key={record._id}>
-                                <td>{record.organisationName}</td>
-                                <td>{record.email}</td>
-                                <td>{record.phone}</td>
-                                <td>
-                                    <a href={record.website} target="_blank">{record.website}</a>
-                                </td>
-                                <td>{record.address}</td>
+                                <td>{record.donorName}</td>
+                                <td>{record.organisation.organisationName}</td>
+                                <td>{record.organisation.email}</td>
+                                <td>{record.organisation.phone}</td>
+                                <td>{record.bloodGroup}</td>
                                 <td> {
-                                    moment(record.createdAt).format("DD/MM/YYYY hh:mm:ss A")
+                                    moment(record.createdAt).format("DD/MM/YYYY A")
                                 }
                                 </td>
+                                <td>{record.status}</td>
                             </tr>
                         ))}
                     </tbody>

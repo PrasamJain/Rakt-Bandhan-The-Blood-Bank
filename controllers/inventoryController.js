@@ -99,7 +99,7 @@ const createInventoryController = async (req, res) => {
 // Create Donation | POST
 const createDonationController = async (req, res) => {
     try {
-        const { requestType, donorName, donorEmail, donorPhone, bloodGroup, organisation } = req.body;
+        const { status,requestType, donorName, donorEmail, donorPhone, bloodGroup, organisation,recipient } = req.body;
 
         // Validation
         if (!donorName || !donorEmail || !donorPhone || !bloodGroup) {
@@ -110,12 +110,14 @@ const createDonationController = async (req, res) => {
 
         // Save donation record
         const donation = new donationModel({
+            status,
             requestType,
             donorName,
             donorEmail,
             donorPhone,
             bloodGroup,
             organisation,
+            recipient,
             // Add more fields as needed
         });
 
@@ -127,7 +129,7 @@ const createDonationController = async (req, res) => {
             donation
         });
     } catch (error) {
-        console.log(error);
+        console.log("error in controller: ",error);
         return res.status(500).send({
             success: false,
             message: "Error in Create Donation API",
@@ -141,7 +143,8 @@ const createDonationController = async (req, res) => {
 const getInventoryController = async (req, res) => {
     try {
         const inventory = await inventoryModel.find({ organisation: req.body.userId, }).populate('donar').populate("hospital").sort({ createdAt: -1 });
-        return res.status(200).send({
+        // console.log(req.body.userId);
+;        return res.status(200).send({
             success: true,
             message: "Get All records successfully",
             inventory
@@ -220,6 +223,41 @@ const getDonarsController = async (req, res) => {
         })
     }
 };
+
+
+/// GET DONAR RECORDS
+const getRequestController = async (req, res) => {
+    try {
+        const recipient = req.body.userId;
+        // console.log("recipient : ",recipient);
+        // find donars
+        const donarId = await donationModel.distinct("_id", {
+            recipient,
+        });
+        const donars = await donationModel.find({ _id: { $in: donarId } });
+        
+        const org = donars[0].organisation;
+        const organisation = await userModel.find({ _id: { $in: org } });
+
+        return res.status(200).send({
+            success: true,
+            message: "Donar Record Fetched Successfully",
+            donars,
+            organisation
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send({
+            success: false,
+            message: "Error in Get Donars Records API",
+            error
+        })
+    }
+};
+
+
+
+
 
 /// GET HOSPITALS RECORDS
 const getHospitalController = async (req, res) => {
@@ -337,6 +375,7 @@ module.exports = {
     createDonationController, 
     getInventoryController, 
     getDonarsController, 
+    getRequestController,
     getHospitalController, 
     getOrgnaisationController, 
     getOrgnaisationForHospitalController, 

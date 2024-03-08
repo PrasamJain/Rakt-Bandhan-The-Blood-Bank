@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import Spinner from '../components/shared/Spinner';
-import Layout from '../components/shared/Layout/Layout';
-import Modal from '../components/shared/modal/Modal';
-import API from '../services/api';
+import Spinner from '../../components/shared/Spinner';
+import Layout from '../../components/shared/Layout/Layout';
+import Modal from '../../components/shared/modal/Modal';
+import API from '../../services/api';
 import moment from 'moment';
-import '../index.css';
+import '../../index.css';
 
-const HomePage = () => {
+const Transaction = () => {
     const { loading, error, user } = useSelector((state) => state.auth);
     // console.log(loading, error, user);
     const [data, setData] = useState([]);
@@ -18,8 +18,8 @@ const HomePage = () => {
 
     const getBloodRecords = async () => {
         try {
-            const { data } = await API.get('/inventory/get-inventory');
-            console.log("transaction ", data.inventory);
+            const { data } = await API.get('/admin/transaction');
+            console.log("transaction ", data);
             if (data?.success) {
                 setData(data?.inventory);
             }
@@ -42,14 +42,14 @@ const HomePage = () => {
 
     return (
         <Layout>
-            {user?.role === "admin" && navigate('/admin')}
+            {user?.role === "admin" && navigate('/transaction')}
             {error && <span>{alert(error)}</span>}
             {loading ? (
                 <Spinner />
             ) : (
                 <div style={{ marginLeft: "10px", marginRight: "40px" }}>
                     <div className="d-flex align-items-center justify-content-between mb-3">
-                        <h4
+                        {/* <h4
                             className='ms-0'
                             data-bs-toggle="modal"
                             data-bs-target="#staticBackdrop"
@@ -57,6 +57,13 @@ const HomePage = () => {
                         >
                             <i className='fa-solid fa-plus text-success py-4'></i>
                             Add Inventory
+                        </h4> */}
+                        <h4
+                            className='ms-0'
+                            style={{ fontWeight: "bold", paddingLeft: "9px" }}
+                        >
+                            <i className='fa-sharp fa-solid fa-building-ngo text-success py-4'></i>
+                            Transactions
                         </h4>
                         <div className="mb-3" style={{ paddingRight: "40px", marginTop: "20px" }}>
                             <label htmlFor="search" className="form-label" style={{ fontWeight: "bold" }}>
@@ -82,7 +89,6 @@ const HomePage = () => {
                                 <th scope="col">Inventory Type</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Time & Date</th>
-                                <th scope="col">Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -98,7 +104,6 @@ const HomePage = () => {
                                     <td>
                                         {moment(record.createdAt).format("DD/MM/YYYY hh:mm:ss A")}
                                     </td>
-                                    <td>{record.action}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -111,4 +116,4 @@ const HomePage = () => {
     );
 };
 
-export default HomePage;
+export default Transaction;

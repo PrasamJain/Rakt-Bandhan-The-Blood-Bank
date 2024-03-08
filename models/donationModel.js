@@ -2,6 +2,10 @@ const mongoose = require('mongoose');
 
 const donationSchema = new mongoose.Schema(
     {
+        status: {
+            type: String,
+            required: true,
+        },
         requestType: {
             type: String,
             required: true,
@@ -33,6 +37,12 @@ const donationSchema = new mongoose.Schema(
         //     type: String,
         //     required: [true, "organisation is require"],
         // },
+
+        recipient: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "users",
+            required: [true, "recipient is require"],
+        },
 
         organisation: {
             type: mongoose.Schema.Types.ObjectId,

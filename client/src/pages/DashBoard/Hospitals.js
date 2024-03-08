@@ -5,11 +5,12 @@ import API from '../../services/api';
 import "../../index.css"
 const Hospitals = () => {
     const [data, setData] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
     // find hospitals records
     const getHospitals = async () => {
         try {
             const { data } = await API.get('/inventory/get-hospitals');
-            console.log("recipent org : ",data.hospitals);
+            console.log("recipent org : ", data.hospitals);
             // setData(data);
             if (data?.success) {
                 setData(data?.hospitals);
@@ -18,20 +19,53 @@ const Hospitals = () => {
             console.log(error);
         }
     }
+
+    const handleStatusChange = async (e, id) => {
+        const newStatus = e.target.value;
+        console.log("change status : ", newStatus);
+        // Update the status in the database using an API call or other method
+        // Example API call using axios:
+        const { data } = await API.put(`/inventory/submit-donation/${id}`, {
+            status: newStatus,
+        });
+        console.log("change status : ", data);
+    };
+
+
     useEffect(() => {
         getHospitals();
     }, []);
 
+    const handleSearchTermChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+
+    const filteredDonars = data.filter((donor) =>
+        donor.donorEmail.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
     return (
         <Layout>
-            <h4
-                className='ms-0'
+            <div className="d-flex align-items-center justify-content-between mb-3">
+                <h4 className='ms-1' style={{ fontWeight: "bold", paddingLeft: "30px", marginBottom: 0 }}>
+                    <i className="fa-solid fa-hospital text-success py-4"></i>
+                    Recipient Request
+                </h4>
+                <div className="mb-3" style={{ paddingRight: "40px", marginTop: "20px" }}>
+                    <label htmlFor="search" className="form-label" style={{ fontWeight: "bold" }}>
+                        Search Recipient:
+                    </label>
 
-                style={{ fontWeight: "bold", paddingLeft: "9px" }}
-            >
-                <i className='fa-solid fa-hospital text-success py-4'></i>
-                Hospitals Org
-            </h4>
+                    <input
+                        type="text"
+                        id="search"
+                        className="form-control"
+                        value={searchTerm}
+                        onChange={handleSearchTermChange}
+                        placeholder="Enter recipient email..."
+                    />
+                </div>
+            </div>
             <div style={{ marginLeft: "10px", marginRight: "40px" }}>
                 <table class="table table-info table-striped tableClass">
                     <thead>
@@ -42,22 +76,53 @@ const Hospitals = () => {
                             <th scope="col">Blood Group</th>
                             <th scope="col">Request Type</th>
                             <th scope="col">Date</th>
+                            <th scope="col">Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {data?.map((record) => (
-                            <tr key={record._id}>
-                                <td>{record.donorName || record.organisation + " (ORG)"}</td>
-                                <td>{record.donorEmail}</td>
-                                <td>{record.donorPhone}</td>
-                                <td>{record.bloodGroup}</td>
-                                <td>{record.requestType}</td>
-                                <td> {
-                                    moment(record.createdAt).format("DD/MM/YYYY")
-                                }
-                                </td>
-                            </tr>
+                        {filteredDonars.map((record) => (
+                            // Check if requestType is "receive"
+                            record.requestType === "receive" ? (
+                                <tr key={record._id}>
+                                    <td>{record.donorName || record.organisation + " (ORG)"}</td>
+                                    
+
+                                    {/* To highlinght the email wehn search */}
+                                    <td>
+                                        {record.donorEmail.toLowerCase().includes(searchTerm.toLowerCase()) ? (
+                                            <>
+                                                {record.donorEmail.split(new RegExp(`(${searchTerm})`, 'gi')).map((part, index) => (
+                                                    part.toLowerCase() === searchTerm.toLowerCase() ? (
+                                                        <span key={index} style={{ backgroundColor: 'yellow' }}>{part}</span>
+                                                    ) : (
+                                                        <span key={index}>{part}</span>
+                                                    )
+                                                ))}
+                                            </>
+                                        ) : (
+                                            record.donorEmail
+                                        )}
+                                    </td>
+
+                                    <td>{record.donorPhone}</td>
+                                    <td>{record.bloodGroup}</td>
+                                    <td>{record.requestType}</td>
+                                    <td>{moment(record.createdAt).format("DD/MM/YYYY")}</td>
+                                    <td>
+                                        {/* Dropdown menu for accept or reject */}
+                                        <select
+                                            value={record.status}
+                                            onChange={(e) => handleStatusChange(e, record._id)}
+                                        >
+                                            <option value="pending">Pending</option>
+                                            <option value="accepted">Accepted</option>
+                                            <option value="rejected">Rejected</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                            ) : null // Don't render if requestType is not "receive"
                         ))}
+
                     </tbody>
                 </table>
             </div>

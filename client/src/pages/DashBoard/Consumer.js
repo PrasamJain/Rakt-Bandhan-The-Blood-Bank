@@ -9,11 +9,14 @@ import InputType from '../../components/shared/Form/InputType';
 
 const Consumer = () => {
     const { user } = useSelector((state) => state.auth);
+    // console.log("u detail ", user);
     const [data, setData] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
     const [donorName, setDonorName] = useState('');
-    const [requestType, setRequesttype] = useState('receive');
+    const requestType = "receive";
+    const recipient = user?._id;
+    const [status, setStatus] = useState('pending');
     const [donorEmail, setDonorEmail] = useState('');
     const [donorPhone, setDonorPhone] = useState('');
     const [bloodGroup, setBloodGroup] = useState('');
@@ -31,7 +34,7 @@ const Consumer = () => {
             });
             if (data?.success) {
                 setData(data?.inventory);
-                console.log("D-Data",data);
+                console.log("D-Data", data);
             }
         } catch (error) {
             console.log(error);
@@ -41,7 +44,7 @@ const Consumer = () => {
     const getOrganisations = async () => {
         try {
             const { data } = await API.get("/inventory/get-all-organisations");
-            console.log("org data: ", data.organisations);
+            console.log("all registered org: ", data.organisations);
             if (data?.success) {
                 setOrganisations(data?.organisations);
             }
@@ -56,14 +59,16 @@ const Consumer = () => {
             if (!donorName || !donorEmail || !donorPhone || !bloodGroup) {
                 return alert("Please provide all donor details");
             }
-            console.log("reuqst : ",requestType);
+            // console.log("reuqst : ", requestType);
             const { data } = await API.post("/inventory/submit-donation", {
+                status,
                 requestType,
                 donorName,
                 donorEmail,
                 donorPhone,
                 bloodGroup,
                 organisation,
+                recipient,
             });
             console.log("request status : ", data);
             if (data?.success) {
@@ -74,7 +79,7 @@ const Consumer = () => {
 
             }
         } catch (error) {
-            console.log(error);
+            console.log("error in consumer",error);
             alert("Error submitting donation details. Please try again.");
         }
     };
@@ -118,37 +123,56 @@ const Consumer = () => {
                                     labelText="Recipient Name"
                                     labelFor="donorName"
                                     inputType="text"
-                                    placeholder="Enter Recipient name"
+                                    placeholder={user.hospitalName}
                                     value={donorName}
-                                    onChange={(e) => setDonorName(e.target.value)}
+                                    onChange={(e) => setDonorName(user.hospitalName)}
+
+
                                 />
 
                                 <InputType
                                     labelText="Recipient Email"
                                     labelFor="donorEmail"
-                                    inputType="email"
-                                    placeholder="Enter Recipient email"
+                                    inputType="text"
+                                    placeholder={user.email}
                                     value={donorEmail}
-                                    onChange={(e) => setDonorEmail(e.target.value)}
+                                    onChange={(e) => setDonorEmail(user.email)}
+
                                 />
 
                                 <InputType
                                     labelText="Recipient Phone"
                                     labelFor="donorPhone"
                                     inputType="tel"
-                                    placeholder="Enter Recipient phone"
+                                    placeholder={user.phone}
                                     value={donorPhone}
-                                    onChange={(e) => setDonorPhone(e.target.value)}
+                                    onChange={(e) => setDonorPhone(user.phone)}
+
                                 />
 
-                                <InputType
-                                    labelText="Recipient Blood Group"
-                                    labelFor="bloodGroup"
-                                    inputType="text"
-                                    placeholder="Enter Recipient blood Group"
-                                    value={bloodGroup}
-                                    onChange={(e) => setBloodGroup(e.target.value)}
-                                />
+                                <div className='form-group'>
+                                    <label htmlFor="organisation" className="form-label" style={{ fontWeight: "bold" }}>
+                                        Recipient Blood Group
+                                    </label>
+                                    <select
+                                        id="organisation"
+                                        className="form-select input-type-color"
+                                        value={bloodGroup}
+                                        onChange={(e) => setBloodGroup(e.target.value)}
+                                        style={{ backgroundColor: "#e7ffff", border: "1px solid black" }}
+                                    >
+                                        <option value="">Select Blood Group</option>
+                                        <option value="A+">A+</option>
+                                        <option value="A-">A-</option>
+                                        <option value="B+">B+</option>
+                                        <option value="B-">B-</option>
+                                        <option value="AB+">AB+</option>
+                                        <option value="AB-">AB-</option>
+                                        <option value="O+">O+</option>
+                                        <option value="O-">O-</option>
+                                    </select>
+                                </div>
+
 
                                 <div className='form-group'>
                                     <label htmlFor="organisation" className="form-label" style={{ fontWeight: "bold" }}>
@@ -187,11 +211,12 @@ const Consumer = () => {
                         <tr class="table-warning" style={{ border: "1px solid gray" }}>
                             <th scope="col">Recipient Name</th>
                             <th scope="col">Blood Group</th>
-                            <th scope="col">Inventory Type</th>
                             <th scope="col">Quantity</th>
+                            <th scope="col">Organisation</th>
                             <th scope="col">Email</th>
                             <th scope="col">Address</th>
-                            <th scope="col">Date & Time</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
 
@@ -200,14 +225,15 @@ const Consumer = () => {
                             <tr key={record._id}>
                                 <td>{record.hospital.hospitalName}</td>
                                 <td>{record.bloodGroup}</td>
-                                <td>{record.inventoryType}</td>
-                                <td>{record.quantity}</td>
-                                <td>{record.email}</td>
-                                <td>{record.hospital.address}</td>
+                                <td>{record.quantity} ml</td>
+                                <td>{record.organisation.organisationName}</td>
+                                <td>{record.organisation.email}</td>
+                                <td>{record.organisation.address}</td>
                                 <td> {
                                     moment(record.createdAt).format("DD/MM/YYYY A")
                                 }
                                 </td>
+                                <td>{record.action}</td>
                             </tr>
                         ))}
                     </tbody>
