@@ -75,8 +75,10 @@ const getTransactionController = async (req, res) => {
             .find()
             .populate('donar')
             .populate("hospital")
+            .populate("organisation")
             .sort({ createdAt: -1 });
-
+        console.log(inventory);
+        
         return res.status(200).send({
             success: true,
             message: "Get All records successfully",

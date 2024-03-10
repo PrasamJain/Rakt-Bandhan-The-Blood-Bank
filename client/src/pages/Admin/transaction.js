@@ -12,7 +12,11 @@ const Transaction = () => {
     const { loading, error, user } = useSelector((state) => state.auth);
     // console.log(loading, error, user);
     const [data, setData] = useState([]);
-    const [searchTerm, setSearchTerm] = useState('');
+    // const [searchTerm, setSearchTerm] = useState('');
+    const [organisations, setOrganisations] = useState([]);
+    const [selectedOrganization, setSelectedOrganization] = useState('');
+    const [selectedInventoryType, setSelectedInventoryType] = useState('');
+
 
     const navigate = useNavigate();
 
@@ -28,17 +32,39 @@ const Transaction = () => {
         }
     };
 
-    useEffect(() => {
-        getBloodRecords();
-    }, []);
+    const getOrganisations = async () => {
+        try {
+            const { data } = await API.get("/inventory/get-all-organisations");
+            console.log("all registered org: ", data.organisations);
+            if (data?.success) {
+                setOrganisations(data?.organisations);
+            }
 
-    const handleSearchTermChange = (event) => {
-        setSearchTerm(event.target.value);
+        } catch (error) {
+            console.log(error);
+        }
     };
 
+
+    useEffect(() => {
+        getBloodRecords();
+        getOrganisations();
+    }, []);
+
+    const handleOrganizationChange = (event) => {
+        setSelectedOrganization(event.target.value);
+    };
+
+    const handleInventoryTypeChange = (event) => {
+        setSelectedInventoryType(event.target.value);
+    };
+
+
     const filteredData = data.filter((record) =>
-        record.email.toLowerCase().includes(searchTerm.toLowerCase())
+        (record.organisation._id.toLowerCase().includes(selectedOrganization.toLowerCase())) &&
+        (record.inventoryType.toLowerCase().includes(selectedInventoryType.toLowerCase()))
     );
+
 
     return (
         <Layout>
@@ -49,15 +75,7 @@ const Transaction = () => {
             ) : (
                 <div style={{ marginLeft: "10px", marginRight: "40px" }}>
                     <div className="d-flex align-items-center justify-content-between mb-3">
-                        {/* <h4
-                            className='ms-0'
-                            data-bs-toggle="modal"
-                            data-bs-target="#staticBackdrop"
-                            style={{ cursor: "pointer", fontWeight: "bold", marginBottom: 0 }}
-                        >
-                            <i className='fa-solid fa-plus text-success py-4'></i>
-                            Add Inventory
-                        </h4> */}
+
                         <h4
                             className='ms-0'
                             style={{ fontWeight: "bold", paddingLeft: "9px" }}
@@ -66,17 +84,37 @@ const Transaction = () => {
                             Transactions
                         </h4>
                         <div className="mb-3" style={{ paddingRight: "40px", marginTop: "20px" }}>
-                            <label htmlFor="search" className="form-label" style={{ fontWeight: "bold" }}>
-                                Search Donor:
+                            <label htmlFor="organization" className="form-label" style={{ fontWeight: "bold" }}>
+                                Select Organization:
                             </label>
-                            <input
-                                type="text"
-                                id="search"
-                                className="form-control"
-                                value={searchTerm}
-                                onChange={handleSearchTermChange}
-                                placeholder="Enter donor email..."
-                            />
+                            <select
+                                id="organization"
+                                className="form-select"
+                                value={selectedOrganization}
+                                onChange={handleOrganizationChange}
+                            >
+                                <option value="">All</option>
+                                {organisations.map((org) => (
+                                    <option key={org._id} value={org._id}>
+                                        {org.organisationName}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                        <div className="mb-3" style={{ paddingRight: "40px", marginTop: "20px" }}>
+                            <label htmlFor="inventoryType" className="form-label" style={{ fontWeight: "bold" }}>
+                                Select Inventory Type:
+                            </label>
+                            <select
+                                id="inventoryType"
+                                className="form-select"
+                                value={selectedInventoryType}
+                                onChange={handleInventoryTypeChange}
+                            >
+                                <option value="">ALL</option>
+                                <option value="in">In</option>
+                                <option value="out">Out</option>
+                            </select>
                         </div>
                     </div>
 
@@ -86,6 +124,7 @@ const Transaction = () => {
                                 <th scope="col">Name</th>
                                 <th scope="col">Email</th>
                                 <th scope="col">Blood Group</th>
+                                <th scope="col">Organisation</th>
                                 <th scope="col">Inventory Type</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Time & Date</th>
@@ -99,10 +138,11 @@ const Transaction = () => {
                                     </td>
                                     <td>{record.email}</td>
                                     <td>{record.bloodGroup}</td>
+                                    <td>{record.organisation.organisationName}</td>
                                     <td>{record.inventoryType}</td>
                                     <td>{record.quantity} (ML)</td>
                                     <td>
-                                        {moment(record.createdAt).format("DD/MM/YYYY hh:mm:ss A")}
+                                        {moment(record.createdAt).format("DD/MM/YYYY A")}
                                     </td>
                                 </tr>
                             ))}
