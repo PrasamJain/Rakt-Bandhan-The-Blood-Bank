@@ -142,7 +142,7 @@ const Form = ({ formType, submitBtn, formTitle }) => {
                                     <>
                                         {(role === "admin" || role === "donar") && (
                                             <InputType
-                                                labelText={"Name"}
+                                                labelText={`${role} name`}
                                                 labelFor={"forName"}
                                                 inputType={"text"}
                                                 name={"name"}

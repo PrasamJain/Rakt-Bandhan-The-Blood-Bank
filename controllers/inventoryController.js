@@ -236,7 +236,8 @@ const getRequestController = async (req, res) => {
         });
         const donars = await donationModel.find({ _id: { $in: donarId } });
         
-        const org = donars[0].organisation;
+        // const org = donars[0].organisation;
+        const org = donars.map(donor => donor.organisation);
         const organisation = await userModel.find({ _id: { $in: org } });
 
         return res.status(200).send({

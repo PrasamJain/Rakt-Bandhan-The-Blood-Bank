@@ -13,12 +13,12 @@ const Consumer = () => {
     const [data, setData] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
-    const [donorName, setDonorName] = useState('');
+    const donorName = user.hospitalName;
     const requestType = "receive";
     const recipient = user?._id;
     const [status, setStatus] = useState('pending');
-    const [donorEmail, setDonorEmail] = useState('');
-    const [donorPhone, setDonorPhone] = useState('');
+    const donorEmail = user?.email;
+    const donorPhone = user?.phone;
     const [bloodGroup, setBloodGroup] = useState('');
     const [organisation, setOrganisation] = useState('');
     const [organisations, setOrganisations] = useState([]);
@@ -72,7 +72,7 @@ const Consumer = () => {
             });
             console.log("request status : ", data);
             if (data?.success) {
-                alert("Recipients Request submitted successfully!");
+                // alert("Recipients Request submitted successfully!");
                 window.location.reload();
                 setShowForm(false);
                 // getDonars();  
@@ -116,14 +116,31 @@ const Consumer = () => {
                                 <button type="button" className="btn-close" aria-label="Close" onClick={() => setShowForm(false)}></button>
                             </div>
                             <div className="modal-body">
-                                <div className='d-flex' >
-                                    {/* Blood Type Radio Buttons */}
+                            <div className='d-flex' >
+                                    <label htmlFor="donorName" className="form-label">
+                                        <strong>Recipient Name : </strong>
+                                        <span>{user.hospitalName}</span>
+                                    </label>
                                 </div>
-                                <InputType
-                                    labelText="Recipient Name"
+
+                                <div>
+                                    <label htmlFor="donorEmail" className="form-label">
+                                        <strong>Recipient Email : </strong>
+                                        <span>{user?.email}</span>
+                                    </label>
+                                </div>
+
+                                <div>
+                                    <label htmlFor="donorEmail" className="form-label">
+                                        <strong>Recipient Phone : </strong>
+                                        <span>{user?.phone}</span>
+                                    </label>
+                                </div>
+                                {/* <InputType
+                                    labelText=""
                                     labelFor="donorName"
                                     inputType="text"
-                                    placeholder={user.hospitalName}
+                                    placeholder={}
                                     value={donorName}
                                     onChange={(e) => setDonorName(user.hospitalName)}
 
@@ -131,7 +148,7 @@ const Consumer = () => {
                                 />
 
                                 <InputType
-                                    labelText="Recipient Email"
+                                    labelText=""
                                     labelFor="donorEmail"
                                     inputType="text"
                                     placeholder={user.email}
@@ -148,7 +165,7 @@ const Consumer = () => {
                                     value={donorPhone}
                                     onChange={(e) => setDonorPhone(user.phone)}
 
-                                />
+                                /> */}
 
                                 <div className='form-group'>
                                     <label htmlFor="organisation" className="form-label" style={{ fontWeight: "bold" }}>

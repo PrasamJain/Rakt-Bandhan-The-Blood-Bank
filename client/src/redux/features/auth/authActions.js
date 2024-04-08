@@ -12,7 +12,7 @@ export const userLogin = createAsyncThunk('auth/login',
             if (data.success) {
                 localStorage.setItem('token', data.token);
                 // toast.success(data.message);
-                alert(data.message);
+                // alert(data.message);
                 if (role === "donar" || role === "hospital") {
                     window.location.replace("/organisation");
                 } else if (role === "admin") {

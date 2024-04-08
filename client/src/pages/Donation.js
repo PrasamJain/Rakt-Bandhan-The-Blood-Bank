@@ -12,12 +12,12 @@ const Donation = () => {
     const [data, setData] = useState([]);
     const [showForm, setShowForm] = useState(false);
 
-    const [donorName, setDonorName] = useState('');
+    const donorName = user?.name;
     const requestType = "donate";
     const recipient = user?._id;
     const [status, setStatus] = useState('pending');
-    const [donorEmail, setDonorEmail] = useState('');
-    const [donorPhone, setDonorPhone] = useState('');
+    const donorEmail = user?.email;
+    const donorPhone = user?.phone;
     const [bloodGroup, setBloodGroup] = useState('');
     const [organisation, setOrganisation] = useState('');
     const [organisations, setOrganisations] = useState([]);
@@ -54,6 +54,7 @@ const Donation = () => {
 
     const handleDonationSubmit = async () => {
         try {
+            // console.log("donorName : ", donorName,donorEmail,donorPhone,bloodGroup);
             if (!donorName || !donorEmail || !donorPhone || !bloodGroup) {
                 return alert("Please provide all donor details");
             }
@@ -112,34 +113,34 @@ const Donation = () => {
                             </div>
                             <div className="modal-body">
                                 <div className='d-flex' >
-                                    {/* Blood Type Radio Buttons */}
+                                    <label htmlFor="donorName" className="form-label">
+                                        <strong>Donor Name:</strong>
+                                        <span>{user?.name}</span>
+                                    </label>
                                 </div>
-                                <InputType
-                                    labelText="Donor Name"
-                                    labelFor="donorName"
-                                    inputType="text"
-                                    placeholder={user?.name}
-                                    value={donorName}
-                                    onChange={(e) => setDonorName(user?.name)}
-                                />
 
-                                <InputType
-                                    labelText="Donor Email"
-                                    labelFor="donorEmail"
-                                    inputType="email"
-                                    placeholder={user?.email}
-                                    value={donorEmail}
-                                    onChange={(e) => setDonorEmail(user?.email)}
-                                />
+                                <div>
+                                    <label htmlFor="donorEmail" className="form-label">
+                                        <strong>Donor Email :</strong>
+                                        <span>{user?.email}</span>
+                                    </label>
+                                </div>
 
-                                <InputType
+                                <div>
+                                    <label htmlFor="donorEmail" className="form-label">
+                                        <strong>Donor Phone :</strong>
+                                        <span>{user?.phone}</span>
+                                    </label>
+                                </div>
+
+                                {/* <InputType
                                     labelText="Donor Phone"
                                     labelFor="donorPhone"
                                     inputType="tel"
                                     placeholder={user?.phone}
                                     value={donorPhone}
                                     onChange={(e) => setDonorPhone(user?.phone)}
-                                />
+                                /> */}
 
                                 <div className='form-group'>
                                     <label htmlFor="organisation" className="form-label" style={{ fontWeight: "bold" }}>
