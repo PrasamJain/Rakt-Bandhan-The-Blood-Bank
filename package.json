@@ -17,7 +17,7 @@
     "EXpressjs",
     "Nodejs"
   ],
-  "author": "Rahul Bairagi",
+  "author": "Prasam jain",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
