@@ -41,7 +41,7 @@ const DonarList = () => {
                 style={{ fontWeight: "bold", paddingLeft: "9px" }}
             >
                 <i class="fa-solid fa-hand-holding-medical text-success py-4"></i>
-                Donars Prasam
+                Donors Prasam
             </h4>
             <div style={{ marginLeft: "10px", marginRight: "40px" }}>
                 <table class="table table-info table-striped tableClass">

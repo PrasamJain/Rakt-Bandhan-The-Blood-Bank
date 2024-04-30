@@ -37,7 +37,7 @@ const Donar = () => {
             <div className="d-flex align-items-center justify-content-between mb-3">
                 <h4 className='ms-1' style={{ fontWeight: "bold", paddingLeft: "30px", marginBottom: 0 }}>
                     <i className="fa-solid fa-hand-holding-medical text-success py-4"></i>
-                    Donars Request
+                    Donors Request
                 </h4>
                 <div className="mb-3" style={{ paddingRight: "40px", marginTop: "20px" }}>
                     <label htmlFor="search" className="form-label" style={{ fontWeight: "bold" }}>

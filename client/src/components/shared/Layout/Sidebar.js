@@ -42,7 +42,7 @@ const Sidebar = () => {
                             </div>
                             <div className={`menu-item ${location.pathname === '/donar' && "active"}`}>
                                 <i i className={"fa-solid fa-hand-holding-medical"}></i>
-                                <Link to='/donar'>Donar</Link>
+                                <Link to='/donar'>Donor</Link>
                             </div>
                             <div className={`menu-item ${location.pathname === "/hospital" && "active"}`}>
                                 <i className={"fa-solid fa-hospital"}></i>
@@ -56,7 +56,7 @@ const Sidebar = () => {
                                     }`}
                             >
                                 <i className="fa-solid fa-warehouse"></i>
-                                <Link to="/donar-list">Donar List</Link>
+                                <Link to="/donar-list">Donor List</Link>
                             </div>
                             <div
                                 className={`menu-item ${location.pathname === "/hospital-list" && "active"

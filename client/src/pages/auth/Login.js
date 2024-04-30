@@ -234,6 +234,80 @@ const Login = () => {
                 </div>
             </div>
 
+            <hr></hr>
+            {/* Our team section */}
+            <div className="our-team-section" style={{ marginTop: '3rem' }}>
+                    <h2 style={{ textAlign: 'center' }}>Our Team</h2>
+                    <div className="row justify-content-center">
+                        {/* Prasam Jain Card */}
+                        <div className="col-md-4 mb-3">
+                            <div className="card">
+                                <img
+                                    src="./assets/images/prasam.jpg"
+                                    className="card-img-top rounded-circle"
+                                    alt="Prasam Jain"
+                                    style={{
+                                        width: '130px',
+                                        height: '130px',
+                                        margin: 'auto', // Center horizontally
+                                        display: 'block',
+                                        marginTop: '20px' // Ensures proper alignment
+                                    }}
+                                />
+
+                                <div className="card-body" >
+                                    <h5 style={{ textAlign: 'center' }}>Prasam Jain (Founder & CEO)</h5>
+                                    <p className="card-text" style={{ textAlign: 'center' }}>Full Stack Developer</p>
+                                    <ul className="list-unstyled">
+                                        <li><em>I am a quick learner and problem solver & I believe that
+                                            I can contribute to your team by bringing fresh perspectives,
+                                            and a willingness to learn and grow.</em></li>
+                                    </ul>
+                                </div>
+                                <div className="card-footer text-center">
+                                    <a href="mailto:prasamjain294@gamil.com"><i className="fa-solid fa-envelope text-success me-3"></i></a>
+                                    <a href="https://github.com/prasamjain"><i className="fa-brands fa-github text-success me-3"></i></a>
+                                    <a href="https://www.linkedin.com/in/prasam-jain-59a45a191"><i className="fa-brands fa-linkedin text-success me-3"></i></a>
+                                    <span>Phone: 6265973186</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Palash Mishra Card */}
+                        <div className="col-md-4 mb-3">
+                            <div className="card">
+                                <img
+                                    src="./assets/images/palash.jpeg"
+                                    className="card-img-top rounded-circle"
+                                    alt="Prasam Jain"
+                                    style={{
+                                        width: '130px',
+                                        height: '130px',
+                                        margin: 'auto', // Center horizontally
+                                        display: 'block',
+                                        marginTop: '20px' // Ensures proper alignment
+                                    }}
+                                />
+                                <div className="card-body">
+                                    <h5 style={{ textAlign: 'center' }}>Palash Mishra (Co-Founder)</h5>
+                                    <p className="card-text" style={{ textAlign: 'center' }}>Full Stack Developer</p>
+                                    <ul className="list-unstyled">
+                                        <li><em>I am excited about the opportunity to work as an intern 
+                                            at your company and I am confident that I can make valuable 
+                                            contributions to your projects.</em></li>
+                                    </ul>
+                                </div>
+                                <div className="card-footer text-center">
+                                    <a href="mailto:palashmishra54@gmail.com"><i className="fa-solid fa-envelope text-success me-3"></i></a>
+                                    <a href="https://github.com/palash0216"><i className="fa-brands fa-github text-success me-3"></i></a>
+                                    <a href="https://www.linkedin.com/in/palash-mishra-2a5877204/"><i className="fa-brands fa-linkedin text-success me-3"></i></a>
+                                    <span>Phone: 7049991771</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             <footer style={{ backgroundColor: "#333", color: "#fff", padding: "20px", textAlign: "center" }}>
                 <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
                     <div className="row">

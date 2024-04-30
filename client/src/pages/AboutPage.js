@@ -70,7 +70,7 @@ const AboutPage = () => {
                                 />
                                 <div className="card-body">
                                     <h5 style={{ textAlign: 'center' }}>Palash Mishra (Co-Founder)</h5>
-                                    <p className="card-text" style={{ textAlign: 'center' }}>Fronted Designer</p>
+                                    <p className="card-text" style={{ textAlign: 'center' }}>Full Stack Developer</p>
                                     <ul className="list-unstyled">
                                         <li><em>I am excited about the opportunity to work as an intern 
                                             at your company and I am confident that I can make valuable 
