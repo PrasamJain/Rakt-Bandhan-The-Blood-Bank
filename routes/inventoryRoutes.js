@@ -3,7 +3,8 @@ const {
     createInventoryController,
     createDonationController, 
     getInventoryController, 
-    getDonarsController, 
+    getDonarsController,
+    updateDonorStatus, 
     getRequestController,
     getHospitalController, 
     getOrgnaisationController, 
@@ -34,6 +35,9 @@ router.post('/get-inventory-hospital', authMiddleware, getInventoryHospitalContr
 
 // GET ALL DONAR RECORDS || GET
 router.get('/get-donars', authMiddleware, getDonarsController)
+
+// Update status accept or reject
+router.put('/update-donor-status', authMiddleware, updateDonorStatus)
 
 //GET pending request at reciver side
 router.get('/pending-request', authMiddleware, getRequestController)

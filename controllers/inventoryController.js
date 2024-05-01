@@ -225,6 +225,32 @@ const getDonarsController = async (req, res) => {
 };
 
 
+const updateDonorStatus = async (req, res) => {
+    const { id } = req.body; // Assuming donorId is passed in the URL parameters
+    const { status } = req.body; // Assuming the new status is sent in the request body
+
+    console.log("donorId & Status : ", id , status);
+    try {
+        // Find the donor in your database based on donorId
+        const donor = await donationModel.findById(id);
+
+        if (!donor) {
+            return res.status(404).json({ success: false, message: 'Donor not found' });
+        }
+
+        // Update the donor's status
+        donor.status = status;
+        await donor.save();
+
+        res.status(200).json({ success: true, message: 'Donor status updated successfully', donor });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Internal server error' });
+    }
+};
+
+
+
 /// GET DONAR RECORDS
 const getRequestController = async (req, res) => {
     try {
@@ -375,7 +401,8 @@ module.exports = {
     createInventoryController,
     createDonationController, 
     getInventoryController, 
-    getDonarsController, 
+    getDonarsController,
+    updateDonorStatus, 
     getRequestController,
     getHospitalController, 
     getOrgnaisationController, 

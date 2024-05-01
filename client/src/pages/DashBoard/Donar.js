@@ -28,6 +28,27 @@ const Donar = () => {
         setSearchTerm(event.target.value);
     };
 
+    const handleStatusChange = async (event, donorId) => {
+        const newStatus = event.target.value;
+        // console.log("Status : ", newStatus);
+        try {
+            const response = await API.put(`/inventory/update-donor-status`, { id: donorId ,status: newStatus });
+            // console.log("R : ",response);
+            if (response.data.success) {
+                // Update the status in the local data state
+                const updatedData = data.map(donor => {
+                    if (donor._id === donorId) {
+                        donor.status = newStatus;
+                    }
+                    return donor;
+                });
+                setData(updatedData);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     const filteredDonars = data.filter((donor) =>
         donor.donorEmail.toLowerCase().includes(searchTerm.toLowerCase())
     );
