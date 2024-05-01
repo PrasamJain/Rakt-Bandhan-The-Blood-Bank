@@ -256,7 +256,7 @@ const Login = () => {
                                 />
 
                                 <div className="card-body" >
-                                    <h5 style={{ textAlign: 'center' }}>Prasam Jain (Founder & CEO)</h5>
+                                    <h5 style={{ textAlign: 'center' }}>Prasam Jain </h5>
                                     <p className="card-text" style={{ textAlign: 'center' }}>Full Stack Developer</p>
                                     <ul className="list-unstyled">
                                         <li><em>I am a quick learner and problem solver & I believe that
@@ -289,7 +289,7 @@ const Login = () => {
                                     }}
                                 />
                                 <div className="card-body">
-                                    <h5 style={{ textAlign: 'center' }}>Palash Mishra (Co-Founder)</h5>
+                                    <h5 style={{ textAlign: 'center' }}>Palash Mishra </h5>
                                     <p className="card-text" style={{ textAlign: 'center' }}>Full Stack Developer</p>
                                     <ul className="list-unstyled">
                                         <li><em>I am excited about the opportunity to work as an intern 
