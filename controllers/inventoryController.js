@@ -229,7 +229,7 @@ const updateDonorStatus = async (req, res) => {
     const { id } = req.body; // Assuming donorId is passed in the URL parameters
     const { status } = req.body; // Assuming the new status is sent in the request body
 
-    console.log("donorId & Status : ", id , status);
+    // console.log("donorId & Status : ", id , status);
     try {
         // Find the donor in your database based on donorId
         const donor = await donationModel.findById(id);
