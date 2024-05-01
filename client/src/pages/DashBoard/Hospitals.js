@@ -20,17 +20,6 @@ const Hospitals = () => {
         }
     }
 
-    const handleStatusChange = async (e, id) => {
-        const newStatus = e.target.value;
-        console.log("change status : ", newStatus);
-        // Update the status in the database using an API call or other method
-        // Example API call using axios:
-        const { data } = await API.put(`/inventory/submit-donation/${id}`, {
-            status: newStatus,
-        });
-        console.log("change status : ", data);
-    };
-
 
     useEffect(() => {
         getHospitals();
@@ -38,6 +27,27 @@ const Hospitals = () => {
 
     const handleSearchTermChange = (event) => {
         setSearchTerm(event.target.value);
+    };
+
+    const handleStatusChange = async (event, donorId) => {
+        const newStatus = event.target.value;
+        // console.log("Status : ", newStatus);
+        try {
+            const response = await API.put(`/inventory/update-donor-status`, { id: donorId ,status: newStatus });
+            // console.log("R : ",response);
+            if (response.data.success) {
+                // Update the status in the local data state
+                const updatedData = data.map(donor => {
+                    if (donor._id === donorId) {
+                        donor.status = newStatus;
+                    }
+                    return donor;
+                });
+                setData(updatedData);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     const filteredDonars = data.filter((donor) =>
