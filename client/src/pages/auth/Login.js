@@ -268,7 +268,7 @@ const Login = () => {
                                     <a href="mailto:prasamjain294@gamil.com"><i className="fa-solid fa-envelope text-success me-3"></i></a>
                                     <a href="https://github.com/prasamjain"><i className="fa-brands fa-github text-success me-3"></i></a>
                                     <a href="https://www.linkedin.com/in/prasam-jain-59a45a191"><i className="fa-brands fa-linkedin text-success me-3"></i></a>
-                                    <span>Phone: 6265973186</span>
+                                    <span>Phone: +91-6265973186</span>
                                 </div>
                             </div>
                         </div>
@@ -277,7 +277,7 @@ const Login = () => {
                         <div className="col-md-4 mb-3">
                             <div className="card">
                                 <img
-                                    src="./assets/images/palash.jpeg"
+                                    src="./assets/images/Rahul.jpg"
                                     className="card-img-top rounded-circle"
                                     alt="Prasam Jain"
                                     style={{
