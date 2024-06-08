@@ -57,7 +57,7 @@ const AboutPage = () => {
                         <div className="col-md-4 mb-3">
                             <div className="card">
                                 <img
-                                    src="./assets/images/palash.jpeg"
+                                    src="./assets/images/Rahul.jpg"
                                     className="card-img-top rounded-circle"
                                     alt="Prasam Jain"
                                     style={{
@@ -69,7 +69,7 @@ const AboutPage = () => {
                                     }}
                                 />
                                 <div className="card-body">
-                                    <h5 style={{ textAlign: 'center' }}>Palash Mishra</h5>
+                                    <h5 style={{ textAlign: 'center' }}>Rahul Bairagi</h5>
                                     <p className="card-text" style={{ textAlign: 'center' }}>Full Stack Developer</p>
                                     <ul className="list-unstyled">
                                         <li><em>I am excited about the opportunity to work as an intern 
@@ -78,10 +78,10 @@ const AboutPage = () => {
                                     </ul>
                                 </div>
                                 <div className="card-footer text-center">
-                                    <a href="mailto:palashmishra54@gmail.com"><i className="fa-solid fa-envelope text-success me-3"></i></a>
-                                    <a href="https://github.com/palash0216"><i className="fa-brands fa-github text-success me-3"></i></a>
-                                    <a href="https://www.linkedin.com/in/palash-mishra-2a5877204/"><i className="fa-brands fa-linkedin text-success me-3"></i></a>
-                                    <span>Phone: 7049991771</span>
+                                    <a href="mailto:rahulbairagiofficial@gmail.com"><i className="fa-solid fa-envelope text-success me-3"></i></a>
+                                    <a href="https://github.com/rahulcode751"><i className="fa-brands fa-github text-success me-3"></i></a>
+                                    <a href="https://www.linkedin.com/in/rahul3008/"><i className="fa-brands fa-linkedin text-success me-3"></i></a>
+                                    <span>Phone: +91-6264959991</span>
                                 </div>
                             </div>
                         </div>
